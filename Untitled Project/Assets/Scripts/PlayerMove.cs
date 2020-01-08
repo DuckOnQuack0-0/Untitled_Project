@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private string horizontalInputName;
     [SerializeField] private string verticalInputName;
     [SerializeField] private float movementSpeed;
+    [SerializeField] private float sprintSpeed;
 
     private CharacterController charController;
 
@@ -25,6 +26,7 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
         PlayerMovement();
+        PlayerSprint();
     }
 
     private void PlayerMovement()
@@ -39,6 +41,22 @@ public class PlayerMove : MonoBehaviour
 
         JumpInput();
 
+    }
+
+    private void PlayerSprint()
+    {
+        float baseSpeed = 6.0f;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            print("Player is Sprinting!");
+            movementSpeed = sprintSpeed;
+        }
+        else if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            print("Player has stoped Sprinting!");
+            movementSpeed = baseSpeed;
+        }
     }
 
     private void JumpInput()

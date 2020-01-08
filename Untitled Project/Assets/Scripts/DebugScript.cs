@@ -21,10 +21,10 @@ public class DebugScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
+        if (Input.GetKey(KeyCode.F1))
         {
             print("Button has been pressed!");
-            this.transform.position = levelStartLocation;
+            this.transform.position = new Vector3(levelStartLocation.x, levelStartLocation.y, levelStartLocation.z);
         }
     }
 
