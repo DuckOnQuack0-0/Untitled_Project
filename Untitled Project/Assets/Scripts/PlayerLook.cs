@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerLook : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private float mouseSensitivity;
 
     [SerializeField] private Transform playerBody;
+    //private Camera cam;
 
     private float xAxisClamp;
 
@@ -15,6 +17,7 @@ public class PlayerLook : MonoBehaviour
     {
         LockCursor();
         xAxisClamp = 0.0f;
+       
     }
 
 

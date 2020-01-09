@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PrototypeGun : MonoBehaviour
 {
     [SerializeField] private GameObject gunBarrel;
     public Camera mainCam;
 
-    [SerializeField] private float range = 100f;
+    public float range = 100f;
     public float damage = 10f;
 
     [SerializeField] private float fireRate = 15f;
     [SerializeField] private float nextTimeToFire = 0f;
 
     public GameObject bangStandin;
+    public Image crosshair;
 
 
     private void Awake()
@@ -36,6 +38,22 @@ public class PrototypeGun : MonoBehaviour
         {
             bangStandin.SetActive(false);
         }
+
+        RaycastHit hit;
+
+        if(Physics.Raycast(mainCam.transform.position,mainCam.transform.forward, out hit, range))
+        {
+            Debug.DrawRay(mainCam.transform.position, mainCam.transform.forward * range, Color.cyan);
+            Target target = hit.transform.GetComponent<Target>();
+            if(target != null)
+            {
+                crosshair.color = Color.red;
+            }
+            else
+            {
+                crosshair.color = Color.white;
+            }
+        }
     }
 
     private void FireWeapon()
@@ -45,7 +63,7 @@ public class PrototypeGun : MonoBehaviour
         if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit, range))
         {
             Debug.Log(hit.transform.name);
-            Debug.DrawRay(mainCam.transform.position, mainCam.transform.forward, Color.cyan);
+            Debug.DrawRay(mainCam.transform.position, mainCam.transform.forward * range, Color.cyan);
 
            Target target = hit.transform.GetComponent<Target>();
             if(target != null)
