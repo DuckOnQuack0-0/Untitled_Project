@@ -14,6 +14,7 @@ public class PrototypeGun : MonoBehaviour
 
     public GameObject bangStandin;
     public Image crosshair;
+    private AudioSource gunShot;
 
 
     private void Awake()
@@ -21,6 +22,7 @@ public class PrototypeGun : MonoBehaviour
         bangStandin.SetActive(false);
         gunBarrel = GameObject.FindGameObjectWithTag("PrototypeBarrel");
         mainCam = Camera.FindObjectOfType<PlayerLook>().GetComponent<Camera>();
+        gunShot = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -30,9 +32,10 @@ public class PrototypeGun : MonoBehaviour
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             FireWeapon();
+            gunShot.Play();
             bangStandin.SetActive(true);
-            if(bangStandin)
-            print("Shot Fired!");
+            if (bangStandin)
+                print("Shot Fired!");
         }
         else
         {
