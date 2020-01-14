@@ -9,38 +9,82 @@ public class PrototypeGun : MonoBehaviour
     public float range = 100f;
     public float damage = 10f;
 
-    [SerializeField] private float fireRate = 15f;
+    [SerializeField] private float fireRate = 20f;
     [SerializeField] private float nextTimeToFire = 0f;
+    [SerializeField] private int bulletsLeft = 17;
 
-    public GameObject bangStandin;
+    //public GameObject bangStandin;
+    [SerializeField] private GameObject muzzleFlash;
+    [SerializeField] private ParticleSystem muzzleParticles;
+    
     public Image crosshair;
     private AudioSource gunShot;
+    public GameObject reloadText;
+
+    [SerializeField] private bool needsToReload = false;
+    public bool firedGun = false;
+
+    //private Animator animator;
 
 
     private void Awake()
     {
-        bangStandin.SetActive(false);
+        #region TempCode
+        /*Using Temperary UI for the muzzle flash 
+        bangStandin.SetActive(false);*/
+        #endregion
+        //Finding the game object in the heirarchy via Tag 
         gunBarrel = GameObject.FindGameObjectWithTag("PrototypeBarrel");
+        //Finding the camera via component on to where the player look script is located
         mainCam = Camera.FindObjectOfType<PlayerLook>().GetComponent<Camera>();
+        //Finding the gunShot audio source attached to the gameobject 
         gunShot = GetComponent<AudioSource>();
+        //GameObject containing the muzzlefalsh particles
+        muzzleFlash = GameObject.FindGameObjectWithTag("PrototypeMuzzleFlash");
+        //The particle system component with in the muzzleFlash gameObject 
+        muzzleParticles = muzzleFlash.GetComponent<ParticleSystem>();
+        //Setting the text inactive until called later in the script 
+        reloadText.SetActive(false);
+        #region Test Animator Code
+        //Getting the animatior component
+        //animator = GetComponent<Animator>();
+        #endregion
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
+
+        //Setting bool equal to animator parameter
+        //animator.SetBool("firedGun", firedGun);
+
+        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire && needsToReload == false && bulletsLeft > 0)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             FireWeapon();
+            firedGun = true;
+            muzzleParticles.Play();
             gunShot.Play();
-            bangStandin.SetActive(true);
+            bulletsLeft -= 1;
+            #region TestCode
+            /*bangStandin.SetActive(true);
             if (bangStandin)
-                print("Shot Fired!");
+                print("Shot Fired!");*/
+            #endregion
         }
-        else
+
+        if (bulletsLeft == 0)
         {
-            bangStandin.SetActive(false);
+            needsToReload = true;
+            reloadText.SetActive(true);
         }
+        else if(bulletsLeft > 0)
+        {
+            needsToReload = false;
+            reloadText.SetActive(false);
+        }
+
+        Reload();
 
         RaycastHit hit;
 
@@ -48,6 +92,8 @@ public class PrototypeGun : MonoBehaviour
         {
             Debug.DrawRay(mainCam.transform.position, mainCam.transform.forward * range, Color.cyan);
             Target target = hit.transform.GetComponent<Target>();
+            
+
             if(target != null)
             {
                 crosshair.color = Color.red;
@@ -75,5 +121,14 @@ public class PrototypeGun : MonoBehaviour
             }
         }
             
+    }
+
+    private void Reload()
+    {
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            bulletsLeft = 17;
+        } 
+        
     }
 }
