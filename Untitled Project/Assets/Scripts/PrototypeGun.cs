@@ -87,6 +87,8 @@ public class PrototypeGun : MonoBehaviour
 
         RaycastHit hit;
 
+        crosshair.color = Color.white;
+
         if(Physics.Raycast(mainCam.transform.position,mainCam.transform.forward, out hit, range))
         {
             Debug.DrawRay(mainCam.transform.position, mainCam.transform.forward * range, Color.cyan);
@@ -96,10 +98,6 @@ public class PrototypeGun : MonoBehaviour
             if(target != null)
             {
                 crosshair.color = Color.red;
-            }
-            else
-            {
-                crosshair.color = Color.white;
             }
         }
     }
