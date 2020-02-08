@@ -15,6 +15,7 @@ public class Projectile : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         target = new Vector3(player.position.x, player.position.y, player.position.z);
+        
     }
 
     private void Update()
@@ -37,7 +38,7 @@ public class Projectile : MonoBehaviour
 
     void DestroyProjectile()
     {
-        Destroy(gameObject); 
+        Destroy(this); 
     }
 
 }
