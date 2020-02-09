@@ -7,6 +7,7 @@ TagManager:
   - PrototypeBarrel
   - Crosshair
   - PrototypeMuzzleFlash
+  - Enemy
   layers:
   - Default
   - TransparentFX

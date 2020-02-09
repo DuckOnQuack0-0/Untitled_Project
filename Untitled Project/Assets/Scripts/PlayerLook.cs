@@ -9,7 +9,13 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private float mouseSensitivity;
 
     [SerializeField] private Transform playerBody;
+    
     //private Camera cam;
+    Camera cam;
+    public Interactable focus;
+    public float range = 100;
+    public PrototypeGun currentGun;
+    //This stuff is for interacting with objects ^
 
     private float xAxisClamp;
 
@@ -17,7 +23,8 @@ public class PlayerLook : MonoBehaviour
     {
         LockCursor();
         xAxisClamp = 0.0f;
-       
+        
+        cam = GetComponent<Camera>();
     }
 
 
@@ -29,6 +36,50 @@ public class PlayerLook : MonoBehaviour
     private void Update()
     {
         CameraRotation();
+        
+        
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, range))
+        {
+            Interactable interactable = hit.collider.GetComponent<Interactable>();
+            if (interactable != null)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    SetFocus(interactable);
+                }
+            }
+        }
+
+        if (focus != null)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                RemoveFocus();
+            }
+        }
+
+    }
+
+    void SetFocus (Interactable newFocus)
+    {
+        if (newFocus != focus)
+        {
+            if (focus != null)
+                focus.OnDeFocused();
+            focus = newFocus;
+        }
+        
+        newFocus.OnFocused(transform);
+    }
+
+    void RemoveFocus ()
+    {
+        if (focus != null)
+            focus.OnDeFocused();
+        focus = null;
     }
 
     private void CameraRotation()
