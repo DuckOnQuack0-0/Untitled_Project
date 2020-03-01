@@ -99,6 +99,7 @@ public class PrototypeGun : MonoBehaviour
             }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             else if (interactable != null)
             {
                 crosshair.color = Color.green;
@@ -108,6 +109,8 @@ public class PrototypeGun : MonoBehaviour
                 crosshair.color = Color.white;
 >>>>>>> parent of b08c5f8... Crosshair Color Fix
             }
+=======
+>>>>>>> parent of 8b924fc... Inventory UI
 =======
 >>>>>>> parent of 8b924fc... Inventory UI
         }
