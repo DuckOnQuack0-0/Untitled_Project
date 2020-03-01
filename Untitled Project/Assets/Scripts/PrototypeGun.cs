@@ -91,13 +91,13 @@ public class PrototypeGun : MonoBehaviour
         {
             Debug.DrawRay(mainCam.transform.position, mainCam.transform.forward * range, Color.cyan);
             Target target = hit.transform.GetComponent<Target>();
-            Interactable interactable = hit.transform.GetComponent<Interactable>();
             
 
             if(target != null)
             {
                 crosshair.color = Color.red;
             }
+<<<<<<< HEAD
 <<<<<<< HEAD
             else if (interactable != null)
             {
@@ -108,6 +108,8 @@ public class PrototypeGun : MonoBehaviour
                 crosshair.color = Color.white;
 >>>>>>> parent of b08c5f8... Crosshair Color Fix
             }
+=======
+>>>>>>> parent of 8b924fc... Inventory UI
         }
     }
 
